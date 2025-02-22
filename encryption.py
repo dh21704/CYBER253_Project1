@@ -17,18 +17,26 @@ def encryption(text, key):
     
     encrypted_text = " "
 
+
+    
+
+    special_characters = set('!@#$%^&*()')
+
+    if any(s_char in special_characters for s_char in text):
+        print("special character: ")
+    
+
     for char in text:
         if char.isalpha(): #if a letter
             number = ord(char)
             print(char, " is the number: ", number)
         elif char.isdigit(): #if char is a number
-            print(" ")
+            print(char, " is a number")
         elif char == " ":
-            print(" space ")
+            print("space")
         else:
             print(" unknown character: ", char)
 
-    
  
     return encrypted_text
  
@@ -59,6 +67,7 @@ def decrypt_file(input_file, output_file, key):
         print(f"Error: {input_file} not found!")
  
 if __name__ == "__main__":
+    print("9")
     print("1. Encrypt a file")
     print("2. Decrypt a file")
  
