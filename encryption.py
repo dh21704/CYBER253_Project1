@@ -4,13 +4,25 @@ pokemon_list_letters = [ #for letters a - z
     "Ambipom", "Uxie", "Onix", "Dragapult", "Cinderance", "Squirtle",
     "Yveltal", "Goodra", "Talonflame", "Aegislash", "Hydreigon", "Staraptor",
     "Sceptile", "Poliwrath"
-    ]
+]
 
 pokemon_list2 = [ #for numbers 0-9
     "Bidoof", "Lanturn", "Sentret", "Dunsparce", "Hypno", 
-    "Darkrai", "Starmie", "Xatu", "Bellsprout"
+    "Darkrai", "Starmie", "Xatu", "Bellsprout", "Bishop"
 ]
 
+pokemon_list3 = [ #for special characters !@#$%^&*().?
+     "Metapod", "Seedot", "Trapinch", "Spiritomb", "Buzzwole",
+     "WalkingWake", "Skeledirge", "Avalugg", "Landorous", "Seismitoad",
+     "Throh", "Sawk"
+]
+
+def transpose(text):
+    return text[::-1]
+
+def shift_and_wrap():
+    print("hello")
+    
 
 def encryption(text, key):
     #encrypted_text = ''.join([chr(ord(char) + key) for char in text])
@@ -18,9 +30,11 @@ def encryption(text, key):
     encrypted_text = " "
 
 
+
+    
     
 
-    special_characters = set('!@#$%^&*()')
+    special_characters = set('!@#$%^&*().?')
 
     if any(s_char in special_characters for s_char in text):
         print("special character: ")
@@ -30,10 +44,28 @@ def encryption(text, key):
         if char.isalpha(): #if a letter
             number = ord(char)
             print(char, " is the number: ", number)
+
+            #applying a shift and a wrap
+            number = (number - key) % 26
+
+            print(char, " is the number: ", number)
+
+
         elif char.isdigit(): #if char is a number
+            #should i just convert numbers to letters? since i am using letters to numbers? 
             print(char, " is a number")
+
+            #applying a shift
+
+            print(char, " is now the char: ")
+
         elif char == " ":
             print("space")
+
+        elif any(char in special_characters for char in text):
+            character_number = ord(char)
+            print(char, " number is now: ", character_number)
+
         else:
             print(" unknown character: ", char)
 
@@ -67,7 +99,7 @@ def decrypt_file(input_file, output_file, key):
         print(f"Error: {input_file} not found!")
  
 if __name__ == "__main__":
-    print("9")
+    print("01")
     print("1. Encrypt a file")
     print("2. Decrypt a file")
  
