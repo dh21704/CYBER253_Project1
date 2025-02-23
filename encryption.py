@@ -1,80 +1,135 @@
-pokemon_list_letters = [ #for letters a - z
-    "Ampharos", "Dragonite", "Gyrados", "Bronzong", "Vilepume", "Latios",
-    "Blastoise", "Mimkyu", "Ho-Oh", "Quagsire", "Wooper", "Gengar",
-    "Ambipom", "Uxie", "Onix", "Dragapult", "Cinderance", "Squirtle",
-    "Yveltal", "Goodra", "Talonflame", "Aegislash", "Hydreigon", "Staraptor",
-    "Sceptile", "Poliwrath"
+letter_list = [ #for letters a - z
+    "♬", "♭", "♮", "♯", "°", "ø",
+    "؂", "≠", "≭", "☧", "☨", "☩",
+    "☫", "☬", "☭", "☯", "☽", "☾",
+    "✙", "✛", "✜", "✝", "✞", "✟",
+    "‡", "♁"
 ]
 
-pokemon_list2 = [ #for numbers 0-9
-    "Bidoof", "Lanturn", "Sentret", "Dunsparce", "Hypno", 
-    "Darkrai", "Starmie", "Xatu", "Bellsprout", "Bishop"
+numbers_list = [ #for numbers 0-9
+    "♔", "♕", "♖", "♗", "♘", 
+    "♙", "♚", "♛", "♜", "♞"
 ]
 
-pokemon_list3 = [ #for special characters !@#$%^&*().?
-     "Metapod", "Seedot", "Trapinch", "Spiritomb", "Buzzwole",
-     "WalkingWake", "Skeledirge", "Avalugg", "Landorous", "Seismitoad",
-     "Throh", "Sawk"
+special_characters_list = [ #for special characters !@#$%^&*().?
+     "♟", "♤", "♠", "♧", "♣",
+     "♡", "♥", "♢", "♦", "♩",
+     "♪", "♫"
 ]
+
+def apply_substitution():
+     
+
+     
+     print("hello")
+
 
 def transpose(text):
     return text[::-1]
 
-def shift_and_wrap():
-    print("hello")
-    
+def shift_and_wrap(text, key):
 
-def encryption(text, key):
-    #encrypted_text = ''.join([chr(ord(char) + key) for char in text])
-    
-    encrypted_text = " "
-
-
-
-    
-    
-
-    special_characters = set('!@#$%^&*().?')
-
-    if any(s_char in special_characters for s_char in text):
-        print("special character: ")
-    
+    encrypted_text = ""
 
     for char in text:
         if char.isalpha(): #if a letter
-            number = ord(char)
-            print(char, " is the number: ", number)
 
-            #applying a shift and a wrap
-            number = (number - key) % 26
+            if char.isupper(): #if uppercase
+                number = ord(char)
+                #print(char, " is the number: ", number)
 
-            print(char, " is the number: ", number)
+                #shift and wrap
+                number = (ord(char) - ord('A') - key) % 26 + ord('A')
 
+                #print(char, " is the number: ", number)
 
-        elif char.isdigit(): #if char is a number
-            #should i just convert numbers to letters? since i am using letters to numbers? 
-            print(char, " is a number")
+                encrypted_text += chr(number)
 
-            #applying a shift
+            elif char.islower(): #if lowercase
+                number = ord(char)
+                #print(char, " is the number: ", number)
 
-            print(char, " is now the char: ")
+                #shift and wrap
+                number = (ord(char) - ord('a') - key) % 26 + ord('a')
 
+                encrypted_text += chr(number)
+
+                #print(char, " is the number: ", number)
+            else: #if not an upper or lowercase
+                encrypted_text += char
         elif char == " ":
-            print("space")
-
-        elif any(char in special_characters for char in text):
-            character_number = ord(char)
-            print(char, " number is now: ", character_number)
-
+                encrypted_text += " "
+        elif char == '\n':
+                encrypted_text += '\n'
+        elif char == '\t':
+                encrypted_text += '\t'
         else:
-            print(" unknown character: ", char)
+            encrypted_text += char
 
- 
     return encrypted_text
+
+def shift_and_wrap_decrypted(text, key):
+
+    encrypted_text = ""
+
+    for char in text:
+        if char.isalpha(): #if a letter
+
+            if char.isupper(): #if uppercase
+                number = ord(char)
+                #print(char, " is the number: ", number)
+
+                #shift and wrap
+                number = (ord(char) - ord('A') + key) % 26 + ord('A')
+
+                #print(char, " is the number: ", number)
+
+                encrypted_text += chr(number)
+
+            elif char.islower(): #if lowercase
+                number = ord(char)
+                #print(char, " is the number: ", number)
+
+                #shift and wrap
+                number = (ord(char) - ord('a') + key) % 26 + ord('a')
+
+                encrypted_text += chr(number)
+
+                #print(char, " is the number: ", number)
+            else: #if not an upper or lowercase
+                encrypted_text += char
+                
+        elif char == " ":
+                encrypted_text += " "
+        elif char == '\n':
+                encrypted_text += '\n'
+        elif char == '\t':
+                encrypted_text += '\t'
+        else:
+            encrypted_text += char
+            
+            
+
+    return encrypted_text
+    
+
+def encryption(text, key):
+    transpose_texxt = transpose(text)
+
+    encrypted_texxt = shift_and_wrap(transpose_texxt, key)
+
+    return encrypted_texxt
+
  
 def decryption(text, key):
-    decrypted_text = ''.join([chr(ord(char) - key) for char in text])
-    return decrypted_text
+    reverse_transpose_text = transpose(text)
+
+    decrypted_texxt = shift_and_wrap_decrypted(reverse_transpose_text, key)
+
+    return decrypted_texxt
+
+
+    
  
 def encrypt_file(input_file, output_file, key):
     try:
@@ -99,7 +154,7 @@ def decrypt_file(input_file, output_file, key):
         print(f"Error: {input_file} not found!")
  
 if __name__ == "__main__":
-    print("01")
+    print("02112434")
     print("1. Encrypt a file")
     print("2. Decrypt a file")
  
