@@ -14,12 +14,18 @@ mapping = {  #for letters a - z
 }
 
 
+#precondition: a string that has been passed through the
+#transposition and shift_and_wrap functions
+#postcondition: applies mapping to the encrypted word
 def apply_substitution(encrypted_word):
      
     substituted_word = ''.join(mapping.get(char, char) for char in encrypted_word)
 
     return substituted_word
 
+#precondition: a string that has been encrypted before
+#using the mapping dictionary on the first lines
+#postcondition: applies reverse mapping to the encrypted word
 def apply_reversed_substitution(encrypted_word):
      
      reversed_mapping = {v : k for k, v in mapping.items()}
@@ -28,10 +34,15 @@ def apply_reversed_substitution(encrypted_word):
 
      return reversed_substituted_word
 
-
+#precondition: none
+#postcondition: reverses the order of the string
 def transpose(text):
      return ''.join(reversed(text.strip()))
 
+#precondition: a text file and a key (integer key for shifting)
+#postcondition: function iterates through the text and determines if character is a special character, number, or letter
+#it then shifts the letters depending on the character, and then keeps it in the range of 0-25 using modulo
+#afterwards, returns the encrypted text shifted and wrapped
 def shift_and_wrap(text, key):
 
     encrypted_text = ""
@@ -73,6 +84,10 @@ def shift_and_wrap(text, key):
 
     return encrypted_text
 
+#precondition: a text file and a key (integer key for shifting)
+#postcondition: function iterates through the text and determines if character is a special character, number, or letter
+#it then shifts the letters depending on the character, and then keeps it in the range of 0-25 using modulo
+#afterwards, returns the decrypted text shifted and wrapped
 def shift_and_wrap_decrypted(text, key):
 
     encrypted_text = ""
@@ -118,6 +133,8 @@ def shift_and_wrap_decrypted(text, key):
     return encrypted_text
     
 
+#precondition: a string plain text and a user inputted key (integer)
+#postcondition: returns a string of the text now, transposed, shifted and wrapped, and substituted (and encrypted)
 def encryption(text, key):
     print("In Encryption, Text Is: ", text)
 
@@ -135,7 +152,8 @@ def encryption(text, key):
 
     return substituted_encrypted_text
 
- 
+#precondition: a string decrypted text that was encrypted with the same algoritm and a user inputted key (integer)
+#postcondition: returns a string of the encrypted text now decrypted transposed, shifted and wrapped, and substituted
 def decryption(text, key):
     print("In Decryption, Text Is: ", text)
 
@@ -152,7 +170,9 @@ def decryption(text, key):
 
 
     
- 
+#precondition: input_file: a text file with plain english words/special characters/numbers
+#precondtition: output_file: a name to write out the output file with the encrypted text input_file
+#precondition: key: an integer that the user inputed
 def encrypt_file(input_file, output_file, key):
     try:
         with open(input_file, 'r') as file:
@@ -191,3 +211,4 @@ if __name__ == "__main__":
         decrypt_file(input_file, output_file, key)
     else:
         print("Invalid choice")
+    
